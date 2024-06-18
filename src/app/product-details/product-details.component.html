@@ -1,0 +1,53 @@
+<div class="header">
+  <h1>Online Store</h1>
+  <button class="login-button">Login</button>
+  <input type="text" class="search-input" placeholder="Search products...">
+</div>
+<div class="product-container">
+    <div class="product-content">
+      <div class="product-img">
+        <img [src]="product.image" alt="product image">
+      </div>
+      <div class="product-info">
+        <p class="product-title">{{ product.title }}</p>
+        <div class="product-rating">
+          <div class="rating"> <i class="fas fa-star"></i>
+            <span>{{ product.rating.rate }}</span>
+          </div>
+          <span class="review-count">({{ product.rating.count }} reviews)</span>
+        </div>
+        <p>{{ stockPresenceMessage }}</p>
+        <div *ngIf="isInCart(product.id); else addToCartButton">
+          <div class="quantity">
+            <button (click)="removeFromCart(product.id)">-</button>
+            {{ cartCount }}
+            <button (click)="addToCart(product.id)" [disabled]="isOutOfStock()">+</button>
+          </div>
+        </div>
+        <ng-template #addToCartButton>
+          <div class="addToCart">
+          <button (click)="addToCart(product.id)" [disabled]="isOutOfStock()">Add to Cart</button>
+          </div>
+        </ng-template>
+        <p class="product-price"> <i class="fas fa-dollar-sign"></i>{{ product.price }}</p>
+        <p class="product-descr">{{ product.description }}</p>
+      </div>
+    </div>
+    <div *ngIf="reviews.length; else noReviews" class="product-reviews">
+      <p>Customer reviews:</p>
+      <div class="reviews">
+        <div
+          *ngFor="let review of reviews">
+          <h4>{{ review.name }}</h4>
+          <div class="review-rating">
+            <i class="fas fa-star"></i> {{ review.rate }}
+          </div>
+          <p>{{ review.text }}</p>
+        </div>
+      </div>
+    </div>
+    <ng-template #noReviews>
+      <p>No reviews yet</p>
+    </ng-template>
+</div>
+  
