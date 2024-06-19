@@ -8,9 +8,55 @@
   <div class="sidebar">
     <div class="filters">
       Filters
+      <form [formGroup]="filterForm" (ngSubmit)=" updateFilteredProducts()">
+        <div>
+          <label>Price From:</label>
+          <input type="number" formControlName="priceFrom">
+        </div>
+        <div>
+          <label>Price To:</label>
+          <input type="number" formControlName="priceTo">
+        </div>
+        <div>
+          <label>Rating From:</label>
+          <input type="number" formControlName="ratingFrom">
+        </div>
+        <div>
+          <label>Rating To:</label>
+          <input type="number" formControlName="ratingTo">
+        </div>
+        <div>
+          <label>
+            <input type="checkbox" formControlName="inStock">
+            In Stock
+          </label>
+        </div>
+        <div>
+          <label>
+            <input type="checkbox" formControlName="hasReviews">
+            Has Reviews
+          </label>
+        </div>
+        <button type="submit">Apply Filters</button>
+      </form>
+      <div class="active-filters" *ngIf="filterBadges?.['length'] != 0">
+        <div class="matches-info" *ngIf="filteredProductsLength != 0">
+        <h3>Found {{ filteredProductsLength }} matches  {{filterBadges?.['length']}}</h3>
+        </div>
+        <div class="filter-badge" *ngFor="let item of filterBadges | keyvalue">
+          <span>{{ item.value }}</span>
+          <button (click)="removeFilter(item.key)">x</button>
+        </div>
+        <div>
+        <button class="clear-filters-button" (click)="clearFilters()">Clear All</button>
+        </div>
+      </div>      
     </div>
   </div>
   <div class="products">
+    <div *ngIf="filteredProductsLength == 0">
+       <h1>No products found</h1>
+    </div>
     <div *ngFor="let product of products" class="product-tile">
       <a [routerLink]="['/products', product.id]">
         <img [src]="product.image" alt="product image">

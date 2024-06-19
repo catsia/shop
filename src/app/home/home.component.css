@@ -22,6 +22,7 @@ body {
     color: #007bff;
     border: 1px solid #007bff;
     cursor: pointer;
+    border-radius: 4px;
   }
   
   .header .login-button:hover {
@@ -41,13 +42,7 @@ body {
   .content {
     display: flex;
   }
-  
-  .sidebar {
-    width: 250px;
-    padding: 10px;
-    border-right: 1px solid #ccc;
-  }
-  
+
   .products {
     flex: 1;
     display: flex;
@@ -63,6 +58,8 @@ body {
     display: flex;
     flex-direction: column;
     justify-content: space-between; 
+    justify-content: space-between; 
+    border-radius: 4px;
   }
   
   .product-tile a {
@@ -99,6 +96,7 @@ body {
     color: #fff;
     border: none;
     cursor: pointer;
+    border-radius: 4px;
   }
   .product-tile .price-rating {
     display: flex;
@@ -131,9 +129,100 @@ body {
     background-color: #007bff;
     border: 1px solid #ccc;
     cursor: pointer;
+    border-radius: 4px;
   }
   
   .product-tile .quantity button:hover {
     background-color: #0056b3;
   }
+
+  .sidebar {
+    width: 250px;
+    padding: 20px;
+    border-right: 1px solid #ccc;
+  }
+  
+  .filters {
+    padding: 10px;
+    background-color: #f9f9f9;
+    border-radius: 4px;
+    margin-bottom: 20px;
+  }
+  
+  .filters form div {
+    margin-bottom: 10px;
+  }
+  
+  .filters label {
+    display: block;
+    margin-bottom: 5px;
+    font-weight: bold;
+  }
+  
+  .filters input[type="number"],
+  .filters input[type="checkbox"] {
+    margin-right: 5px;
+  }
+  
+  .filters button[type="submit"] {
+    padding: 8px 16px;
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+    cursor: pointer;
+    margin-top: 10px;
+    border-radius: 4px;
+  }
+  
+  .filters button[type="submit"]:hover {
+    background-color: #0056b3;
+    border-radius: 4px;
+  }
+  
+  .filters .filter-badge button:hover {
+    color: #ccc;
+  }
+  
+  .active-filters .filter-badge {
+    display: inline-flex; 
+    align-items: center;
+    background-color: #007bff;
+    color: #fff;
+    padding: 3px 8px;
+    border-radius: 4px;
+    margin: 5px 5px 5px 0; 
+  }
+  
+  .active-filters .filter-badge button {
+    background: none;
+    border: none;
+    color: #ffffff;
+    cursor: pointer;
+    font-size: 20px;
+  }
+  
+  .active-filters .filter-badge button:hover {
+    color: #ccc;
+  }
+  
+  .active-filters .matches-info {
+    margin-top: 10px;
+    font-size: 14px;
+    color: #333;
+  }
+  
+  .active-filters .clear-filters-button {
+    padding: 8px 16px;
+    background-color: #dc3545;
+    color: #fff;
+    border: none;
+    cursor: pointer;
+    margin-top: 10px;
+    border-radius: 4px;
+  }
+  
+  .active-filters .clear-filters-button:hover {
+    background-color: #c82333;
+  }
+  
   
