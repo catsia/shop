@@ -1,9 +1,4 @@
-<div class="header">
-  <h1>Online Store</h1>
-  <button class="login-button">Login</button>
-  <input type="text" class="search-input" placeholder="Search products...">
-</div>
-
+<app-header></app-header>
 <div class="content">
   <div class="sidebar">
     <div class="filters">
@@ -41,7 +36,7 @@
       </form>
       <div class="active-filters" *ngIf="filterBadges?.['length'] != 0">
         <div class="matches-info" *ngIf="filteredProductsLength != 0">
-        <h3>Found {{ filteredProductsLength }} matches  {{filterBadges?.['length']}}</h3>
+        <h3>Found {{ filteredProductsLength }} matches</h3>
         </div>
         <div class="filter-badge" *ngFor="let item of filterBadges | keyvalue">
           <span>{{ item.value }}</span>
@@ -74,7 +69,9 @@
         <button (click)="addToCart(product.id)">Add to Cart</button>
       </ng-template>
       <button (click)="deleteProduct(product.id)">Delete</button>
+      <a [routerLink]="['/product/edit', product.id]">
       <button>Edit</button>
+      </a>
       <p><i class="fas fa-dollar-sign"></i>{{ product.price }}</p>
       <p><i class="fas fa-star"></i>{{ product.rating.rate }}/5</p>
     </div>

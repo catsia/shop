@@ -1,0 +1,41 @@
+.header {
+    background-color: #007bff;
+    color: #fff;
+    padding: 10px 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  
+  .header h1 {
+    color: #fff;
+    margin: 0;
+  }
+
+  .header a {
+    outline: none;
+    text-decoration: none;
+  }
+  
+  .header .login-button {
+    padding: 10px 20px;
+    background-color: #fff;
+    color: #007bff;
+    border: 1px solid #007bff;
+    cursor: pointer;
+    border-radius: 4px;
+  }
+  
+  .header .login-button:hover {
+    background-color: #007bff;
+    color: #fff;
+  }
+  
+  .search-input {
+    width: 300px;
+    padding: 8px;
+    margin-top: 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    font-size: 14px;
+  }

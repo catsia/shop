@@ -3,41 +3,6 @@ body {
     margin: 0;
     padding: 0;
   }
-  .header {
-    background-color: #007bff;
-    color: #fff;
-    padding: 10px 20px;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-  }
-  
-  .header h1 {
-    margin: 0;
-  }
-  
-  .header .login-button {
-    padding: 10px 20px;
-    background-color: #fff;
-    color: #007bff;
-    border: 1px solid #007bff;
-    cursor: pointer;
-    border-radius: 4px;
-  }
-  
-  .header .login-button:hover {
-    background-color: #007bff;
-    color: #fff;
-  }
-  
-  .search-input {
-    width: 300px;
-    padding: 8px;
-    margin-top: 10px;
-    border: 1px solid #ccc;
-    border-radius: 4px;
-    font-size: 14px;
-  }
   
   .content {
     display: flex;
@@ -130,6 +95,21 @@ body {
     border: 1px solid #ccc;
     cursor: pointer;
     border-radius: 4px;
+  }
+
+  
+  .product-tile a button {
+    width: 100%;
+    padding: 8px 12px;
+    margin-top: 5px;
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+    cursor: pointer;
+    border-radius: 4px;
+  }
+  .product-tile a button:hover {
+    background-color: #0056b3;
   }
   
   .product-tile .quantity button:hover {

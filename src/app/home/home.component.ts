@@ -6,13 +6,14 @@ import {ActivatedRoute, Router, RouterModule} from '@angular/router';
 import { FormBuilder, FormGroup, NgForm, ReactiveFormsModule } from '@angular/forms';
 import { CartService } from '../shared/cart.service';
 import {KeyValue} from '@angular/common';
+import { HeaderComponent } from '../header/header.component';
 
 @Component({
   standalone: true,
   selector: 'app-home',
   templateUrl: './home.component.html',
   styleUrls: ['./home.component.scss'],
-  imports: [NgFor, RouterModule, NgIf, ReactiveFormsModule, KeyValuePipe]
+  imports: [NgFor, RouterModule, NgIf, ReactiveFormsModule, KeyValuePipe, HeaderComponent]
 })
 export class HomeComponent implements OnInit {
   products: Product[] = [];

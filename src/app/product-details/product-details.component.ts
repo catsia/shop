@@ -5,11 +5,12 @@ import { HttpClient } from '@angular/common/http';
 import { ActivatedRoute } from '@angular/router';
 import {NgIf, NgFor} from "@angular/common";
 import { CartService } from '../shared/cart.service';
+import { HeaderComponent } from '../header/header.component';
 
 @Component({
   selector: 'app-product-details',
   standalone: true,
-  imports: [NgIf, NgFor],
+  imports: [NgIf, NgFor, HeaderComponent],
   templateUrl: './product-details.component.html',
   styleUrl: './product-details.component.css',
 })
