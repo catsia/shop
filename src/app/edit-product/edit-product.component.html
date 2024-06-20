@@ -1,0 +1,54 @@
+<app-header></app-header>
+<div class="container">
+    <div class="form-container">
+      <h2>Edit Product</h2>
+      <form #editForm="ngForm" (ngSubmit)="onSubmit(editForm)">
+        <div>
+          <label for="image">Image:</label>
+          <input type="text" id="image" name="image" [(ngModel)]="product.image" required>
+          <div *ngIf="editForm.controls['image']?.invalid && editForm.controls['image']?.touched" class="error">
+            Image is required.
+          </div>
+        </div>  
+  
+        <div>
+          <label for="title">Title:</label>
+          <input type="text" id="title" name="title" [(ngModel)]="product.title" required>
+          <div *ngIf="editForm.controls['title']?.invalid && editForm.controls['title']?.touched" class="error">
+            Title is required.
+          </div>
+        </div>
+  
+        <div>
+          <label for="price">Price:</label>
+          <input type="number" id="price" name="price" [(ngModel)]="product.price" [pattern]="pricePattern" required>
+          <div *ngIf="editForm.controls['price']?.invalid && editForm.controls['price']?.touched" class="error">
+            Price must be a valid number.
+          </div>
+        </div>
+  
+        <div>
+          <label for="stock">Number in Stock:</label>
+          <input type="number" id="stock" name="stock" [(ngModel)]="product.stock" pattern="[0-9]+" required>
+          <div *ngIf="editForm.controls['stock']?.invalid && editForm.controls['stock']?.touched" class="error">
+            Number in stock must be a valid integer.
+          </div>
+        </div>
+  
+        <div>
+            <label for="description">Description:</label>
+            <textarea id="description" name="description" [(ngModel)]="product.description" required></textarea>
+            <div *ngIf="editForm.controls['description']?.invalid && editForm.controls['description']?.touched" class="error">
+                Description is required.
+            </div>
+        </div>
+  
+        <button type="submit" [disabled]="editForm.invalid">Save</button>
+      </form>
+    </div>
+  
+    <div class="image-container">
+      <img [src]="product.image" alt="Product Image" class="product-image" *ngIf="product.image">
+    </div>
+  </div>
+  

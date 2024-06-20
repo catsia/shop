@@ -6,19 +6,25 @@ import { HomeComponent } from './home/home.component';
 import { ProductDetailsComponent } from './product-details/product-details.component';
 import { CommonModule } from '@angular/common'; 
 import { RouterModule } from '@angular/router';
+import { EditProductComponent } from './edit-product/edit-product.component';
+import { FormsModule } from '@angular/forms';
+import { HeaderComponent } from './header/header.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     HomeComponent,
-    ProductDetailsComponent
+    ProductDetailsComponent,
+    EditProductComponent,
+    HeaderComponent
   ],
   imports: [
     BrowserModule,
     HttpClientModule,
     CommonModule,
     RouterModule,
-    HomeComponent 
+    HomeComponent,
+    FormsModule
   ],
   providers: [HttpClient],
   bootstrap: [AppComponent]
