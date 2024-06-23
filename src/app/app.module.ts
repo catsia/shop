@@ -4,11 +4,13 @@ import { HttpClient, HttpClientModule } from '@angular/common/http' ;
 import { AppComponent } from './app.component';
 import { HomeComponent } from './home/home.component';
 import { ProductDetailsComponent } from './product-details/product-details.component';
-import { CommonModule } from '@angular/common'; 
+import { CommonModule, DecimalPipe } from '@angular/common'; 
 import { RouterModule } from '@angular/router';
 import { EditProductComponent } from './edit-product/edit-product.component';
 import { FormsModule } from '@angular/forms';
 import { HeaderComponent } from './header/header.component';
+import { CartComponent } from './cart/cart.component';
+import { BrowserAnimationsModule, NoopAnimationsModule, provideAnimations } from '@angular/platform-browser/animations';
 
 @NgModule({
   declarations: [
@@ -16,7 +18,8 @@ import { HeaderComponent } from './header/header.component';
     HomeComponent,
     ProductDetailsComponent,
     EditProductComponent,
-    HeaderComponent
+    HeaderComponent,
+    CartComponent,
   ],
   imports: [
     BrowserModule,
@@ -24,9 +27,11 @@ import { HeaderComponent } from './header/header.component';
     CommonModule,
     RouterModule,
     HomeComponent,
-    FormsModule
+    FormsModule,
+    BrowserModule,
+    BrowserAnimationsModule,
   ],
-  providers: [HttpClient],
+  providers: [HttpClient, provideAnimations()],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

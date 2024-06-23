@@ -97,7 +97,14 @@ body {
     border-radius: 4px;
   }
 
+  .product-tile .delete {
+    background-color: #dc3545;
+  }
   
+  .product-tile .delete:hover {
+    background-color: #c82333;
+  }
+    
   .product-tile a button {
     width: 100%;
     padding: 8px 12px;

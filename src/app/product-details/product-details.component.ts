@@ -6,6 +6,7 @@ import { ActivatedRoute } from '@angular/router';
 import {NgIf, NgFor} from "@angular/common";
 import { CartService } from '../shared/cart.service';
 import { HeaderComponent } from '../header/header.component';
+import { Cart } from '../shared/models/cart.model';
 
 @Component({
   selector: 'app-product-details',
@@ -34,13 +35,18 @@ export class ProductDetailsComponent implements OnInit {
 
   stockPresenceMessage: string = '';
   id: number = this.route.snapshot.params['id'];
-  cartCount: number = 0;
+  cart: Cart = {
+    id: this.id,
+    title: '',
+    count: 0,
+    price: 0
+  };
   reviews: Review[] = [];
 
   ngOnInit(): void {
     this.fetchProduct();
     this.fetchReviews();
-    this.cartCount = this.cartService.getCartItem(this.id);
+    this.fetchCart();
   }
 
   fetchProduct(): void {
@@ -53,10 +59,20 @@ export class ProductDetailsComponent implements OnInit {
           : this.product.stock === 0
           ? 'Out of stock'
           : 'Almost sold out';
+          this.cart.title = product.title;
+          this.cart.price = product.price;
       },
       error => console.error('Error fetching product' + this.id, error)
     );
    
+  }
+
+  fetchCart(): void {
+    this.cartService.getProduct(this.id).subscribe(data => {
+      if (data != null) {
+        this.cart = data;
+      }
+    });
   }
 
   fetchReviews(): void {
@@ -72,18 +88,34 @@ export class ProductDetailsComponent implements OnInit {
     return this.product.stock === 0;
   }
 
-  addToCart(productId: number): void {
-    this.cartService.addToCart(productId);
-    this.cartCount = this.cartService.getCartItem(this.id);
+  addToCart(): void {
+    if (this.cart.count != 0) {
+      this.cartService.updateCart({ ...this.cart, count: this.cart.count + 1 }).subscribe(() => {
+        this.fetchCart();
+      });
+    } else {
+      this.cartService.addToCart(new Cart(this.id, this.product.title, 1, this.product.price)).subscribe(() => {
+        this.fetchCart();
+      });
+    }
   }
 
-  isInCart(productId: number): boolean {
-    return this.cartService.isInCart(productId);
+  isInCart(): boolean {
+    return this.cart.count != 0;
   }
 
-  removeFromCart(productId: number): void {
-    this.cartService.removeFromCart(productId);
-    this.cartCount = this.cartService.getCartItem(this.id);
+  removeFromCart(): void {
+    if (this.cart.count != 0) {
+      if (this.cart.count > 1) {
+        this.cartService.updateCart({ ...this.cart, count: this.cart.count - 1 }).subscribe(() => {
+          this.fetchCart();
+        });
+      } else {
+        this.cartService.removeFromCart(this.id).subscribe(() => {
+          this.fetchCart();
+        });
+      }
+    }
   }
 
 }

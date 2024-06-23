@@ -13,16 +13,16 @@
           <span class="review-count">({{ product.rating.count }} reviews)</span>
         </div>
         <p>{{ stockPresenceMessage }}</p>
-        <div *ngIf="isInCart(product.id); else addToCartButton">
+        <div *ngIf="isInCart(); else addToCartButton">
           <div class="quantity">
-            <button (click)="removeFromCart(product.id)">-</button>
-            {{ cartCount }}
-            <button (click)="addToCart(product.id)" [disabled]="isOutOfStock()">+</button>
+            <button (click)="removeFromCart()">-</button>
+            {{ cart.count }}
+            <button (click)="addToCart()" [disabled]="isOutOfStock()">+</button>
           </div>
         </div>
         <ng-template #addToCartButton>
           <div class="addToCart">
-          <button (click)="addToCart(product.id)" [disabled]="isOutOfStock()">Add to Cart</button>
+          <button (click)="addToCart()" [disabled]="isOutOfStock()">Add to Cart</button>
           </div>
         </ng-template>
         <p class="product-price"> <i class="fas fa-dollar-sign"></i>{{ product.price }}</p>

@@ -7,6 +7,7 @@ import { FormBuilder, FormGroup, NgForm, ReactiveFormsModule } from '@angular/fo
 import { CartService } from '../shared/cart.service';
 import {KeyValue} from '@angular/common';
 import { HeaderComponent } from '../header/header.component';
+import { Cart } from '../shared/models/cart.model';
 
 @Component({
   standalone: true,
@@ -17,7 +18,8 @@ import { HeaderComponent } from '../header/header.component';
 })
 export class HomeComponent implements OnInit {
   products: Product[] = [];
-  cart: { [id: number]: number } = {};
+  cartCount = new Map<number, number>();
+  cart: Cart[] = [];
   filterForm: FormGroup;
   filterBadges: { [key: string]: null | number | boolean } = {};
   filteredProductsLength: number = 0;
@@ -46,8 +48,14 @@ export class HomeComponent implements OnInit {
 
       this.fetchProducts();
     });
+    this.fetchCart();
+  }
 
-    this.cart = this.cartService.getCartItems()
+  fetchCart(): void {
+    this.cartService.getCart().subscribe(data => {
+      this.cart = data;
+      this.cart.forEach(item => this.cartCount.set(item.id, item.count));
+    });
   }
 
   fetchProducts(): void {
@@ -116,17 +124,36 @@ export class HomeComponent implements OnInit {
     this.updateFilteredProducts();
   }
 
-
-  addToCart(productId: number): void {
-    this.cartService.addToCart(productId);
+  addToCart(product: Product): void {
+    const cartItem = this.cart.find(item => item.id === product.id);
+    if (cartItem) {
+      this.cartService.updateCart({ ...cartItem, count: cartItem.count + 1 }).subscribe(() => {
+        this.fetchCart();
+      });
+    } else {
+      this.cartService.addToCart(new Cart(product.id, product.title, 1, product.price)).subscribe(() => {
+        this.fetchCart();
+      });
+    }
   }
 
   removeFromCart(productId: number): void {
-    this.cartService.removeFromCart(productId);
+    const cartItem = this.cart.find(item => item.id === productId);
+    if (cartItem) {
+      if (cartItem.count > 1) {
+        this.cartService.updateCart({ ...cartItem, count: cartItem.count - 1 }).subscribe(() => {
+          this.fetchCart();
+        });
+      } else {
+        this.cartService.removeFromCart(productId).subscribe(() => {
+          this.fetchCart();
+        });
+      }
+    }
   }
 
   isInCart(productId: number): boolean {
-    return this.cartService.isInCart(productId);
+    return !!this.cart.find(item => item.id === productId);
   }
 
   deleteProduct(productId: number): void {
@@ -135,4 +162,6 @@ export class HomeComponent implements OnInit {
     },
     error => console.error('Error deleting product:', error));
   }
+
+
 }
