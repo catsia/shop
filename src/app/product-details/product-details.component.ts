@@ -7,6 +7,7 @@ import {NgIf, NgFor} from "@angular/common";
 import { CartService } from '../shared/cart.service';
 import { HeaderComponent } from '../header/header.component';
 import { Cart } from '../shared/models/cart.model';
+import { ProductService } from '../shared/product.service';
 
 @Component({
   selector: 'app-product-details',
@@ -17,7 +18,7 @@ import { Cart } from '../shared/models/cart.model';
 })
 export class ProductDetailsComponent implements OnInit {
 
-  constructor(private http: HttpClient,  private route: ActivatedRoute, private cartService: CartService) {  }
+  constructor(private http: HttpClient,  private route: ActivatedRoute, private cartService: CartService, private productService: ProductService) {  }
 
   product: Product = {
     title: 'No product found',
@@ -50,9 +51,8 @@ export class ProductDetailsComponent implements OnInit {
   }
 
   fetchProduct(): void {
-    this.http.get<Product>('http://localhost:8000/products/' + this.id).subscribe(
-      product => {
-        this.product = product; 
+    this.productService.getProductById(this.id).subscribe(product => {
+      this.product = product; 
         this.stockPresenceMessage =
         this.product.stock > 10
           ? 'In stock'
@@ -61,10 +61,7 @@ export class ProductDetailsComponent implements OnInit {
           : 'Almost sold out';
           this.cart.title = product.title;
           this.cart.price = product.price;
-      },
-      error => console.error('Error fetching product' + this.id, error)
-    );
-   
+    });   
   }
 
   fetchCart(): void {
@@ -76,7 +73,7 @@ export class ProductDetailsComponent implements OnInit {
   }
 
   fetchReviews(): void {
-    this.http.get<Review[]>(`http://localhost:8000/reviews?productId=${this.id}`).subscribe(
+    this.productService.fetchReviewsById(this.id).subscribe(
       reviews => {
         this.reviews = reviews;
       },

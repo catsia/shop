@@ -5,9 +5,9 @@ import { KeyValuePipe, NgFor, NgIf } from '@angular/common';
 import {ActivatedRoute, Router, RouterModule} from '@angular/router';
 import { FormBuilder, FormGroup, NgForm, ReactiveFormsModule } from '@angular/forms';
 import { CartService } from '../shared/cart.service';
-import {KeyValue} from '@angular/common';
 import { HeaderComponent } from '../header/header.component';
 import { Cart } from '../shared/models/cart.model';
+import { ProductService } from '../shared/product.service';
 
 @Component({
   standalone: true,
@@ -24,7 +24,7 @@ export class HomeComponent implements OnInit {
   filterBadges: { [key: string]: null | number | boolean } = {};
   filteredProductsLength: number = 0;
 
-  constructor(private http: HttpClient, private cartService: CartService,  private fb: FormBuilder, private route: ActivatedRoute,  private router: Router) {
+  constructor(private http: HttpClient, private cartService: CartService,  private fb: FormBuilder, private route: ActivatedRoute,  private router: Router, private productService: ProductService) {
     this.filterForm = this.fb.group({
       priceFrom: [''],
       priceTo: [''],
@@ -45,7 +45,6 @@ export class HomeComponent implements OnInit {
         inStock: params['inStock']  === 'true' || false,
         hasReviews: params['hasReviews']  === 'true' || false
       });
-
       this.fetchProducts();
     });
     this.fetchCart();
@@ -59,6 +58,12 @@ export class HomeComponent implements OnInit {
   }
 
   fetchProducts(): void {
+    this.productService.getProducts(this.getHttpParams()).subscribe(products => {
+      this.products = products;
+    })
+  }
+
+  getHttpParams(): HttpParams {
     let params = new HttpParams();
 
     if (this.filterForm.value.priceFrom) {
@@ -86,14 +91,8 @@ export class HomeComponent implements OnInit {
     else {
       params = params.set('rating.count', 0);
     }
-
-    this.http.get<Product[]>('http://localhost:8000/products', { params }).subscribe(
-      products => {
-        this.products = products;
-        this.updateFilteredProducts();
-      },
-      error => console.error('Error fetching products:', error)
-    );
+    
+    return params;
   }
 
   updateFilteredProducts(): void {
@@ -157,7 +156,7 @@ export class HomeComponent implements OnInit {
   }
 
   deleteProduct(productId: number): void {
-    this.http.delete(`http://localhost:8000/products/${productId}`).subscribe(() => {
+    this.productService.deleteProduct(productId).subscribe(() => {
       this.products = this.products.filter(p => p.id !== productId);
     },
     error => console.error('Error deleting product:', error));

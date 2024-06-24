@@ -42,7 +42,6 @@ export class EditProductComponent implements OnInit {
   }
 
   onSubmit(form: NgForm): void {
-    console.log(form.value);
     if (form.valid) {
       this.productService.updateProduct(this.productId, form.value).subscribe(response => {
         console.log('Product updated successfully', response);

@@ -145,6 +145,11 @@
       "email": "test@gmail.com",
       "password": "Test_12",
       "id": "2"
+    },
+    {
+      "id": "7beb",
+      "email": "katya.lemesh@gmail.com",
+      "password": "Qwert_12345"
     }
   ],
   "reviews": [
