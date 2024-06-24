@@ -8,16 +8,16 @@ import { Product } from './models/product.model';
 })
 export class ProductService {
 
-  private apiUrl = 'http://localhost:8000/products';
+  private baseUrl = 'http://localhost:8000/products';
 
   constructor(private http: HttpClient) { }
 
   getProductById(id: number): Observable<any> {
-    return this.http.get(`${this.apiUrl}/${id}`);
+    return this.http.get(`${this.baseUrl}/${id}`);
   }
 
   updateProduct(id: number, product: { [key: string]: string }): Observable<any> {
     const headers = new HttpHeaders({ 'Content-Type': 'application/json' });
-    return this.http.patch(`${this.apiUrl}/${id}`, product, {headers});
+    return this.http.patch(`${this.baseUrl}/${id}`, product, {headers});
   }
 }

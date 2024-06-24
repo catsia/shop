@@ -2,8 +2,14 @@
   <a [routerLink]="['/']">
   <h1>Online Store</h1>
   </a>
-  <button class="login-button">Login</button>
   <input type="text" class="search-input" placeholder="Search products...">
+  <nav>
+    <button class="login-button" *ngIf="authService.isLoggedIn()" (click)="authService.logout()">Logout</button>
+    <a *ngIf="!authService.isLoggedIn()" [routerLink]="['/auth']">
+      <button class="login-button" >Login</button>
+    </a>
+  </nav>
+  
   <a [routerLink]="['/cart']">
     <i class="fas fa-shopping-cart"></i>
   </a>

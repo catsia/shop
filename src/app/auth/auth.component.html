@@ -1,0 +1,39 @@
+<app-header></app-header>
+
+<form #authForm="ngForm" (ngSubmit)="onSubmit(authForm)" novalidate>
+    <div>
+      <label for="email">Email:</label>
+      <input type="email" id="email" name="email" [(ngModel)]="user.email" required email>
+      <div *ngIf="authForm.controls['email']?.invalid && authForm.controls['email']?.touched">
+        <small *ngIf="authForm.controls['email']?.errors?.['required']">Email is required.</small>
+        <small *ngIf="!authForm.controls['email']?.errors?.['required'] && authForm.controls['email']?.errors?.['email']">Invalid email format.</small>
+      </div>
+    </div>
+  
+    <div>
+      <label for="password">Password:</label>
+      <input type="password" id="password" name="password" ngModel required minlength="6" pattern="^(?=.*[A-Z])(?=.*\d)(?=.*[\W_]).+$">
+      <div *ngIf="authForm.controls['password']?.invalid && authForm.controls['password']?.touched">
+        <small *ngIf="authForm.controls['password']?.errors?.['required']">Password is required.</small>
+        <small *ngIf="!authForm.controls['password']?.errors?.['required'] && authForm.controls['password']?.errors?.['minlength']">Password must be at least 6 characters long. </small>
+        <small *ngIf="!authForm.controls['password']?.errors?.['minlength'] && authForm.controls['password']?.errors?.['pattern']">Password must contain at least one uppercase letter, one digit, and one special character.</small>
+      </div>
+    </div>
+
+    <div *ngIf="isSignUpMode">
+      <label for="confirmPassword">Confirm Password:</label>
+      <input type="password" id="confirmPassword" name="confirmPassword" ngModel required [pattern]="authForm.controls['password'].value">
+      <div *ngIf="authForm.controls['confirmPassword']?.invalid && authForm.controls['confirmPassword']?.touched">
+        <small *ngIf="authForm.controls['confirmPassword']?.errors?.['required']">Confirm Password is required.</small>
+        <small *ngIf="!authForm.controls['confirmPassword']?.errors?.['required'] && authForm.controls['confirmPassword']?.errors?.['pattern']">Passwords do not match.</small>
+      </div>
+    </div>
+  
+    <button type="submit" [disabled]="authForm.invalid">{{ isSignUpMode ? 'Sign Up' : 'Sign In' }}</button>
+   
+    <div>
+     <a (click)="toggleAuthMode()"> {{ isSignUpMode ? 'I already have an account' : 'Register' }} </a>
+    </div>
+   
+  </form>
+  

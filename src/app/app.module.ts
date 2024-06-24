@@ -11,6 +11,7 @@ import { FormsModule } from '@angular/forms';
 import { HeaderComponent } from './header/header.component';
 import { CartComponent } from './cart/cart.component';
 import { BrowserAnimationsModule, NoopAnimationsModule, provideAnimations } from '@angular/platform-browser/animations';
+import { AuthComponent } from './auth/auth.component';
 
 @NgModule({
   declarations: [
@@ -20,6 +21,7 @@ import { BrowserAnimationsModule, NoopAnimationsModule, provideAnimations } from
     EditProductComponent,
     HeaderComponent,
     CartComponent,
+    AuthComponent
   ],
   imports: [
     BrowserModule,
