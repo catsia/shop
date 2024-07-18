@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { ProductService } from '../shared/product.service';
 import {  FormsModule, NgForm } from '@angular/forms';
@@ -15,24 +15,12 @@ import { HeaderComponent } from '../header/header.component';
 })
 
 export class EditProductComponent implements OnInit {
-  pricePattern = '^[0-9]*(\.[0-9]{1,2})?$';
+  @ViewChild('editForm') editForm!: NgForm;
+  pricePattern = '[0-9]+(\.[0-9]{1,2})?';
   productId: number = this.route.snapshot.params['id'];
-  product: Product = {
-    title: 'No product found',
-    rating: {
-      rate: 0,
-      count: 10
-    },
-    id: 0,
-    price: 0,
-    description: '',
-    image: '',
-    featured: false,
-    stock: 0
-  };
+  product: Product;
 
   constructor(private route: ActivatedRoute, private productService: ProductService) { 
-    
   }
 
   ngOnInit(): void {
@@ -50,4 +38,23 @@ export class EditProductComponent implements OnInit {
       });
   }
   }
+
+  get image() {
+    return this.editForm?.controls['image'];
+  }
+
+  get title() {
+    return this.editForm?.controls['title'];
+  }
+  get price() {
+    return this.editForm?.controls['price'];
+  }
+  get stock() {
+    return this.editForm?.controls['stock'];
+  }
+
+  get description() {
+    return this.editForm?.controls['description'];
+  }
+
 }
