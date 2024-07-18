@@ -32,8 +32,8 @@ export class ProductService {
     return this.http.delete(`${this.baseUrl}/${id}`);
   }
 
-  fetchReviewsById(id: number): Observable<any> {
-    return this.http.get<Review[]>(`${this.reviewUrl}/${id}`)
+  fetchReviewsById(id: number): Observable<Review[]> {
+    return this.http.get<Review[]>(`${this.reviewUrl}?productId=${id}`)
   }
  
 }

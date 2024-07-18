@@ -15,8 +15,8 @@ export class CartService {
     return this.http.get<Cart[]>(this.baseUrl);
   }
 
-  getProduct(id: number): Observable<Cart> {
-    return this.http.get<Cart>(`${this.baseUrl}/${id}`);
+  getProduct(id: number): Observable<Cart[]> {
+    return this.http.get<Cart[]>(`${this.baseUrl}?id=${id}`);
   }
 
   addToCart(product: Cart): Observable<Cart> {
