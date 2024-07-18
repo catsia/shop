@@ -13,7 +13,7 @@ import { AuthService } from './auth.service';
   styleUrl: './auth.component.css'
 })
 export class AuthComponent {
-  @ViewChild('authForm') loginForm!: NgForm;
+  @ViewChild('authForm') authForm!: NgForm;
   user: User = {
     email: '',
     password: ''
@@ -29,8 +29,8 @@ export class AuthComponent {
 
   onSubmit(form: NgForm) {
     const user: User = {
-      email: this.loginForm.controls['email'].value,
-      password: this.loginForm.controls['password'].value
+      email: this.authForm.controls['email'].value,
+      password: this.authForm.controls['password'].value
     }
     if (form.valid) {
       if (this.isSignUpMode) {
@@ -39,5 +39,17 @@ export class AuthComponent {
         this.authService.login(user);
       }
     }
+  }
+
+  get email() {
+    return this.authForm?.controls['email'];
+  }
+
+  get password() {
+    return this.authForm?.controls['password'];
+  }
+
+  get confirmPassword () {
+    return this.authForm?.controls['confirmPassword'];
   }
 }
