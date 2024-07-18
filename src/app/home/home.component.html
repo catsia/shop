@@ -7,18 +7,30 @@
         <div>
           <label>Price From:</label>
           <input type="number" formControlName="priceFrom">
+          <div *ngIf="priceFrom < 0" class="error">
+            Price must be a valid number.
+          </div>
         </div>
         <div>
           <label>Price To:</label>
-          <input type="number" formControlName="priceTo">
+          <input type="number" formControlName="priceTo" min="0">
+          <div *ngIf="priceTo < 0" class="error">
+            Price must be a valid number.
+          </div>
         </div>
         <div>
           <label>Rating From:</label>
-          <input type="number" formControlName="ratingFrom">
+          <input type="number" formControlName="ratingFrom" min="0">
+          <div *ngIf="ratingFrom < 0 || ratingFrom > 5" class="error">
+            Rating must be a valid number from 0 to 5.
+          </div>
         </div>
         <div>
           <label>Rating To:</label>
-          <input type="number" formControlName="ratingTo">
+          <input type="number" formControlName="ratingTo" min="0">
+          <div *ngIf="ratingTo < 0 || ratingTo > 5" class="error">
+            Rating must be a valid number from 0 to 5.
+          </div>
         </div>
         <div>
           <label>
@@ -32,11 +44,11 @@
             Has Reviews
           </label>
         </div>
-        <button type="submit">Apply Filters</button>
+        <button type="submit" [disabled]="filterForm.invalid">Apply Filters</button>
       </form>
-      <div class="active-filters" *ngIf="filterBadges?.['length'] != 0">
-        <div class="matches-info" *ngIf="filteredProductsLength != 0">
-        <h3>Found {{ filteredProductsLength }} matches</h3>
+      <div class="active-filters" *ngIf="filterBadges?.length != 0">
+        <div class="matches-info" *ngIf="products?.length != 0">
+        <h3>Found {{ products.length }} matches</h3>
         </div>
         <div class="filter-badge" *ngFor="let item of filterBadges | keyvalue">
           <span>{{ item.value }}</span>
@@ -49,13 +61,13 @@
     </div>
   </div>
   <div class="products">
-    <div *ngIf="filteredProductsLength == 0">
+    <div *ngIf="products?.length == 0">
        <h1>No products found</h1>
     </div>
     <div *ngFor="let product of products" class="product-tile">
       <a [routerLink]="['/products', product.id]">
-        <img [src]="product.image" alt="product image">
-        <h2>{{ product.title }}</h2>
+        <img [src]="product?.image" alt="product image">
+        <h2>{{ product?.title }}</h2>
       </a>
       
       <div *ngIf="isInCart(product.id); else addToCartButton">
@@ -72,8 +84,8 @@
       <a [routerLink]="['/product/edit', product.id]">
       <button>Edit</button>
       </a>
-      <p><i class="fas fa-dollar-sign"></i>{{ product.price }}</p>
-      <p><i class="fas fa-star"></i>{{ product.rating.rate }}/5</p>
+      <p><i class="fas fa-dollar-sign"></i>{{ product?.price }}</p>
+      <p><i class="fas fa-star"></i>{{ product?.rating?.rate }}/5</p>
     </div>
   </div>
 </div>
