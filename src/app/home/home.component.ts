@@ -10,6 +10,22 @@ import { Cart } from '../shared/models/cart.model';
 import { ProductService } from '../shared/product.service';
 import { HomeService } from './home.service';
 
+interface FilterDefinition {
+  name: string;
+  type: string;
+  validators: any[];
+  defaultValue: any;
+}
+
+const FILTER_DEFINITIONS: FilterDefinition[] = [
+  { name: 'priceFrom', type: 'number', validators: [Validators.min(0)], defaultValue: '' },
+  { name: 'priceTo', type: 'number', validators: [Validators.min(0)], defaultValue: '' },
+  { name: 'ratingFrom', type: 'number', validators: [Validators.min(0), Validators.max(5)], defaultValue: '' },
+  { name: 'ratingTo', type: 'number', validators: [Validators.min(0), Validators.max(5)], defaultValue: '' },
+  { name: 'inStock', type: 'boolean', validators: [], defaultValue: false },
+  { name: 'hasReviews', type: 'boolean', validators: [], defaultValue: false },
+];
+
 @Component({
   standalone: true,
   selector: 'app-home',
@@ -22,41 +38,40 @@ export class HomeComponent implements OnInit {
   cartCount = new Map<number, number>();
   cart: Cart[] = [];
   filterForm: FormGroup;
-  filterBadges: { [key: string]: null | number | boolean } [] = [];
+  filterBadges: { [key: string]: string | null | number | boolean } = {};
 
   constructor(private http: HttpClient, private cartService: CartService,  private fb: FormBuilder, private route: ActivatedRoute,  private router: Router, private productService: ProductService, private homeService: HomeService) {
-    this.filterForm = this.fb.group({
-      priceFrom: ['', Validators.min(0)],
-      priceTo: ['', Validators.min(0)],
-      ratingFrom: ['', [Validators.min(0), Validators.max(5)]],
-      ratingTo: ['', [Validators.min(0), Validators.max(5)]],
-      inStock: [false],
-      hasReviews: [false],
-    },
+  this.filterForm = this.fb.group(
+    FILTER_DEFINITIONS.reduce((acc, filter) => {
+      acc[filter.name] = [filter.defaultValue, filter.validators];
+      return acc;
+    }, {} as { [key: string]: any[] })
   );
   }
  
   ngOnInit(): void {
+  
     this.route.queryParams.subscribe(params => {
-      this.filterForm.setValue({
-        priceFrom: params['priceFrom'] || '',
-        priceTo: params['priceTo'] || '',
-        ratingFrom: params['ratingFrom'] || '',
-        ratingTo: params['ratingTo'] || '',
-        inStock: params['inStock']  === 'true' || false,
-        hasReviews: params['hasReviews']  === 'true' || false
-      });
+      const formValues = FILTER_DEFINITIONS.reduce((acc, filter) => {
+        if (filter.type === 'boolean') {
+          acc[filter.name] = params[filter.name] === 'true' || filter.defaultValue;
+        } else {
+          acc[filter.name] = params[filter.name] || filter.defaultValue;
+        }
+        return acc;
+      }, {} as { [key: string]: any });
+      this.filterForm.setValue(formValues);
+
       this.fetchProducts();
 
-
-      this.filterBadges = {
-        ...(params['priceFrom'] && { priceFrom: `Price from: ${params['priceFrom']}` }),
-        ...(params['priceTo'] && { priceTo: `Price to: ${params['priceTo']}` }),
-        ...(params['ratingFrom'] && { ratingFrom: `Rating from: ${params['ratingFrom']}` }),
-        ...(params['ratingTo'] && { ratingTo: `Rating to: ${params['ratingTo']}` })
-      };
-      
+      FILTER_DEFINITIONS.forEach(filter => {
+        if (params[filter.name] !== undefined && params[filter.name] !== filter.defaultValue) {
+          this.filterBadges[filter.name] = `${capitalize(filter.name.replace(/([A-Z])/g, ' $1'))}: ${params[filter.name]}`;
+        } 
+      });
     });
+
+
     this.fetchCart();
   }
 
@@ -74,23 +89,23 @@ export class HomeComponent implements OnInit {
   }
 
   updateFilteredProducts(): void {
-    const { priceFrom, priceTo, ratingFrom, ratingTo, inStock, hasReviews } = this.filterForm.value;
-  
-    this.filterBadges = {
-      ...(priceFrom && { priceFrom: `Price from: ${priceFrom}` }),
-      ...(priceTo && { priceTo: `Price to: ${priceTo}` }),
-      ...(ratingFrom && { ratingFrom: `Rating from: ${ratingFrom}` }),
-      ...(ratingTo && { ratingTo: `Rating to: ${ratingTo}` })
-    };
+    FILTER_DEFINITIONS.forEach(filter => {
+      this.filterBadges = {};
+      const value = this.filterForm.get(filter.name)?.value;
+
+      if (value !== undefined && value !== filter.defaultValue  && value !== '' && value !== false  && value !== null) {
+        this.filterBadges[filter.name] = `${capitalize(filter.name.replace(/([A-Z])/g, ' $1'))}: ${value}`;
+      } 
+    });
   
     const queryParams: any = {};
   
-    if (priceFrom) queryParams.priceFrom = priceFrom;
-    if (priceTo) queryParams.priceTo = priceTo;
-    if (ratingFrom) queryParams.ratingFrom = ratingFrom;
-    if (ratingTo) queryParams.ratingTo = ratingTo;
-    if (inStock) queryParams.inStock = inStock;
-    if (hasReviews) queryParams.hasReviews = hasReviews;
+    FILTER_DEFINITIONS.forEach(filter => {
+      const value = this.filterForm.get(filter.name)?.value;
+      if (value !== null && value !== undefined && value !== '' && value !== false) {
+        queryParams[filter.name] = value;
+      }
+    });
   
     this.router.navigate([], { queryParams });
   }
@@ -160,4 +175,8 @@ export class HomeComponent implements OnInit {
   get ratingTo() {
     return this.filterForm.value.ratingTo;
   }
+}
+
+function capitalize(str: string) {
+  return str.charAt(0).toUpperCase() + str.slice(1).toLowerCase();
 }

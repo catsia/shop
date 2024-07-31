@@ -46,7 +46,7 @@
         </div>
         <button type="submit" [disabled]="filterForm.invalid">Apply Filters</button>
       </form>
-      <div class="active-filters" *ngIf="filterBadges?.length != 0">
+      <div class="active-filters" *ngIf="filterBadges?.['length'] != 0">
         <div class="matches-info" *ngIf="products?.length != 0">
         <h3>Found {{ products.length }} matches</h3>
         </div>
