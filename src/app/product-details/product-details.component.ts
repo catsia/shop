@@ -61,9 +61,6 @@ export class ProductDetailsComponent implements OnInit {
         if (Array.isArray(reviews)) {
           this.reviews = reviews;
         }
-        else {
-          this.reviews.push(reviews);
-        }
       },
       error => console.error('Error fetching reviews:', error)
     );
