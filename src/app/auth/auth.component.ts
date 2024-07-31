@@ -14,10 +14,7 @@ import { AuthService } from './auth.service';
 })
 export class AuthComponent {
   @ViewChild('authForm') authForm!: NgForm;
-  user: User = {
-    email: '',
-    password: ''
-  };
+  user: User ;
 
   isSignUpMode = true;
 

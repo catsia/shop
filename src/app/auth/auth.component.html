@@ -3,7 +3,7 @@
 <form #authForm="ngForm" (ngSubmit)="onSubmit(authForm)" novalidate>
     <div>
       <label for="email">Email:</label>
-      <input type="email" id="email" name="email" [(ngModel)]="user.email" required email>
+      <input type="email" id="email" name="email" ngModel  required email>
       <div *ngIf="email?.invalid && email?.touched">
         <small *ngIf="email?.errors?.['required']">Email is required.</small>
         <small *ngIf="!email?.errors?.['required'] && email?.errors?.['email']">Invalid email format.</small>
