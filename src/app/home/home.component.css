@@ -1,0 +1,222 @@
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+  }
+  
+  .content {
+    display: flex;
+  }
+
+  .products {
+    flex: 1;
+    display: flex;
+    flex-wrap: wrap;
+  }
+  
+  .product-tile {
+    width: calc(25% - 20px); 
+    margin: 10px;
+    padding: 10px;
+    border: 1px solid #ccc;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between; 
+    justify-content: space-between; 
+    border-radius: 4px;
+  }
+  
+  .product-tile a {
+    text-decoration: none;
+    color: #333;
+    display: block; 
+  }
+  
+  .product-tile .product-image {
+    height: 200px; 
+    overflow: hidden; 
+  }
+  
+  .product-tile img {
+    width: 100%; 
+    height: auto; 
+    object-fit: contain; 
+  }
+  
+  .product-tile h2 {
+    font-size: 18px;
+    margin-top: 10px;
+    margin-bottom: 5px;
+  }
+  
+  .product-tile p {
+    margin-bottom: 10px;
+  }
+  
+  .product-tile button {
+    padding: 8px 12px;
+    margin-top: 5px;
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+    cursor: pointer;
+    border-radius: 4px;
+  }
+  .product-tile .price-rating {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+    margin-top: 10px;
+  }
+  
+  .product-tile .price-rating p {
+    margin: 0;
+    display: flex;
+    align-items: center;
+  }
+  
+  
+  .product-tile button:hover {
+    background-color: #0056b3;
+  }
+  
+  .product-tile .quantity {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-top: 10px;
+  }
+  
+  .product-tile .quantity button {
+    padding: 4px 8px;
+    margin: 0 3px;
+    background-color: #007bff;
+    border: 1px solid #ccc;
+    cursor: pointer;
+    border-radius: 4px;
+  }
+
+  .product-tile .delete {
+    background-color: #dc3545;
+  }
+  
+  .product-tile .delete:hover {
+    background-color: #c82333;
+  }
+    
+  .product-tile a button {
+    width: 100%;
+    padding: 8px 12px;
+    margin-top: 5px;
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+    cursor: pointer;
+    border-radius: 4px;
+  }
+  .product-tile a button:hover {
+    background-color: #0056b3;
+  }
+  
+  .product-tile .quantity button:hover {
+    background-color: #0056b3;
+  }
+
+  .sidebar {
+    width: 250px;
+    padding: 20px;
+    border-right: 1px solid #ccc;
+  }
+  
+  .filters {
+    padding: 10px;
+    background-color: #f9f9f9;
+    border-radius: 4px;
+    margin-bottom: 20px;
+  }
+  
+  .filters form div {
+    margin-bottom: 10px;
+  }
+  
+  .filters label {
+    display: block;
+    margin-bottom: 5px;
+    font-weight: bold;
+  }
+  
+  .filters input[type="number"],
+  .filters input[type="checkbox"] {
+    margin-right: 5px;
+  }
+  
+  .filters button[type="submit"] {
+    padding: 8px 16px;
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+    cursor: pointer;
+    margin-top: 10px;
+    border-radius: 4px;
+  }
+  
+  .filters button[type="submit"]:hover {
+    background-color: #0056b3;
+    border-radius: 4px;
+  }
+  
+  .filters .filter-badge button:hover {
+    color: #ccc;
+  }
+  
+  .active-filters .filter-badge {
+    display: inline-flex; 
+    align-items: center;
+    background-color: #007bff;
+    color: #fff;
+    padding: 3px 8px;
+    border-radius: 4px;
+    margin: 5px 5px 5px 0; 
+  }
+  
+  .active-filters .filter-badge button {
+    background: none;
+    border: none;
+    color: #ffffff;
+    cursor: pointer;
+    font-size: 20px;
+  }
+  
+  .active-filters .filter-badge button:hover {
+    color: #ccc;
+  }
+  
+  .active-filters .matches-info {
+    margin-top: 10px;
+    font-size: 14px;
+    color: #333;
+  }
+  
+  .active-filters .clear-filters-button {
+    padding: 8px 16px;
+    background-color: #dc3545;
+    color: #fff;
+    border: none;
+    cursor: pointer;
+    margin-top: 10px;
+    border-radius: 4px;
+  }
+  
+  .active-filters .clear-filters-button:hover {
+    background-color: #c82333;
+  }
+  
+  .error {
+    color: red;
+    font-size: 12px;
+    margin-top: 5px;
+  }
+  
+  
+  

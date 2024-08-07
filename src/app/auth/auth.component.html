@@ -1,0 +1,39 @@
+
+<form #authForm="ngForm" (ngSubmit)="onSubmit(authForm)" novalidate>
+    <div>
+      <label for="email">Email:</label>
+      <input type="email" id="email" name="email" ngModel  required email>
+      <div *ngIf="email?.invalid && email?.touched">
+        <small *ngIf="email?.errors?.['required']">Email is required.</small>
+        <small *ngIf="!email?.errors?.['required'] && email?.errors?.['email']">Invalid email format.</small>
+      </div>
+    </div>
+  
+    <div>
+      <label for="password">Password:</label>
+      <input type="password" id="password" name="password" ngModel required minlength="6" pattern="^(?=.*[A-Z])(?=.*\d)(?=.*[\W_]).+$">
+      <div *ngIf="password?.invalid && password?.touched">
+        <small *ngIf="password?.errors?.['required']">Password is required.</small>
+        <small *ngIf="!password?.errors?.['required'] && password?.errors?.['minlength']">Password must be at least 6 characters long. </small>
+        <small *ngIf="!password?.errors?.['minlength'] && password?.errors?.['pattern']">Password must contain at least one uppercase letter, one digit, and one special character.</small>
+      </div>
+
+    </div>
+
+    <div *ngIf="isSignUpMode">
+      <label for="confirmPassword">Confirm Password:</label>
+      <input type="password" id="confirmPassword" name="confirmPassword" ngModel required [pattern]="password?.value">
+      <div *ngIf="confirmPassword?.invalid && confirmPassword?.touched">
+        <small *ngIf="confirmPassword?.errors?.['required']">Confirm Password is required.</small>
+        <small *ngIf="!confirmPassword?.errors?.['required'] && confirmPassword?.errors?.['pattern']">Passwords do not match.</small>
+      </div>
+    </div>
+  
+    <button type="submit" [disabled]="authForm.invalid">{{ isSignUpMode ? 'Sign Up' : 'Sign In' }}</button>
+   
+    <div>
+     <a (click)="toggleAuthMode()"> {{ isSignUpMode ? 'I already have an account' : 'Register' }} </a>
+    </div>
+   
+  </form>
+  
