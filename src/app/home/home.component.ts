@@ -31,7 +31,7 @@ const FILTER_DEFINITIONS: FilterDefinition[] = [
   selector: 'app-home',
   templateUrl: './home.component.html',
   styleUrls: ['./home.component.scss'],
-  imports: [NgFor, RouterModule, NgIf, ReactiveFormsModule, KeyValuePipe, HeaderComponent]
+  imports: [NgFor, RouterModule, NgIf, ReactiveFormsModule, KeyValuePipe]
 })
 export class HomeComponent implements OnInit {
   products: Product[] = [];

@@ -8,7 +8,7 @@ import { AuthService } from './auth.service';
 @Component({
   selector: 'app-auth',
   standalone: true,
-  imports: [FormsModule, NgIf, HeaderComponent],
+  imports: [FormsModule, NgIf],
   templateUrl: './auth.component.html',
   styleUrl: './auth.component.css'
 })

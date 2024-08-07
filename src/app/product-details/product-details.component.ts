@@ -12,7 +12,7 @@ import { ProductService } from '../shared/product.service';
 @Component({
   selector: 'app-product-details',
   standalone: true,
-  imports: [NgIf, NgFor, HeaderComponent],
+  imports: [NgIf, NgFor],
   templateUrl: './product-details.component.html',
   styleUrls: ['./product-details.component.css'],
 })

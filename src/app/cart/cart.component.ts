@@ -10,7 +10,7 @@ import { HeaderComponent } from '../header/header.component';
   standalone: true,
   templateUrl: './cart.component.html',
   styleUrls: ['./cart.component.css'],
-  imports: [NgFor, HeaderComponent, CommonModule],
+  imports: [NgFor, CommonModule],
   animations: [
   trigger('rowAnimation', [
     transition(':enter', [

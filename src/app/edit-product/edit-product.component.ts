@@ -11,7 +11,7 @@ import { HeaderComponent } from '../header/header.component';
   selector: 'app-edit-product',
   templateUrl: './edit-product.component.html',
   styleUrls: ['./edit-product.component.css'],
-  imports: [FormsModule, NgIf, HeaderComponent]
+  imports: [FormsModule, NgIf]
 })
 
 export class EditProductComponent implements OnInit {
